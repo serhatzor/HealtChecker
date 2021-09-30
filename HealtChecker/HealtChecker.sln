@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31507.150
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.UI", "HealtChecker.UI\HealtChecker.UI.csproj", "{459FFC7C-FC51-49D7-999B-B40F2D567FAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Service.HealtCheckEndpoints", "HealtChecker.Service.Apps\HealtChecker.Service.HealtCheckEndpoints.csproj", "{BB3D6015-5499-48CB-812F-7B43F4F08A4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Service.HealtCheckEndpoints", "HealtChecker.Service.HealtCheckEndpoints\HealtChecker.Service.HealtCheckEndpoints.csproj", "{BB3D6015-5499-48CB-812F-7B43F4F08A4D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Service.Metrics", "HealtChecker.Service.Metrics\HealtChecker.Service.Metrics.csproj", "{42C74E05-9B91-4FC7-9B37-DA4518B5A432}"
 EndProject
@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Shared", "Heal
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{2DBF721F-F132-47DC-8E8E-D96353CCD6C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Service.HealtCheckEndpoints.IntegrationTests", "HealtChecker.Service.Apps.IntegrationTests\HealtChecker.Service.HealtCheckEndpoints.IntegrationTests.csproj", "{9862B5DA-EE20-4B67-A8EE-74F8468733DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Service.HealtCheckEndpoints.IntegrationTests", "HealtChecker.Service.HealtCheckEndpoints.IntegrationTests\HealtChecker.Service.HealtCheckEndpoints.IntegrationTests.csproj", "{9862B5DA-EE20-4B67-A8EE-74F8468733DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
