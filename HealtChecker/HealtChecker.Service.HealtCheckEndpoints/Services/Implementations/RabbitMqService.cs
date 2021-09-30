@@ -3,6 +3,8 @@ using HealtChecker.Shared.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
@@ -33,9 +35,10 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
                 _logChannel.QueueDeclare(_logQueueName, false, false, false, null);
                 _metricChannel.QueueDeclare(_metricQueueName, false, false, false, null);
             }
-            catch
+            catch (Exception ex)
             {
-
+                Trace.TraceError(ex.Message);
+                Trace.TraceError(ex.StackTrace);
             }
 
         }

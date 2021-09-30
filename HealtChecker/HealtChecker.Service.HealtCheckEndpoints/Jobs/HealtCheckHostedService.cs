@@ -18,13 +18,19 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Jobs
         private Timer _timer { get; set; }
         private IServiceProvider _serviceProvider { get; init; }
         private IRabbitMqService _rabbitMqService { get; init; }
+        private IHealtCheckCallService _healtCheckCallService { get; init; }
         private int _eachTickRecordCount { get; init; } = 20;
         private double _jobInterval { get; init; } = 10;
 
-        public HealtCheckHostedService(IServiceProvider serviceProvider, IConfiguration configuration, IRabbitMqService rabbitMqService)
+        public HealtCheckHostedService(
+            IServiceProvider serviceProvider, 
+            IConfiguration configuration, 
+            IRabbitMqService rabbitMqService, 
+            IHealtCheckCallService healtCheckCallService)
         {
             _serviceProvider = serviceProvider;
             _rabbitMqService = rabbitMqService;
+            _healtCheckCallService = healtCheckCallService;
             if (Int32.TryParse(configuration["Job.EachTickRecordCount"], out int eachTickRecordCount))
             {
                 _eachTickRecordCount = eachTickRecordCount;
@@ -52,7 +58,6 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Jobs
                 healtCheckEndpoints = healtCheckEndpointService
                     .GetExecutableHealtCheckEndpoints(_eachTickRecordCount)
                     .Result.Data;
-
             }
 
             if (healtCheckEndpoints == null)
@@ -70,33 +75,7 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Jobs
 
         private async Task HandleHealtCheck(HealtCheckEndpointModel healtCheckEndpoint)
         {
-            Metric metric = new Metric();
-            using (HttpClient client = new HttpClient())
-            {
-                DateTime startTime = DateTime.UtcNow;
-
-                HttpResponseMessage getHttpResponse = null;
-                try
-                {
-                    getHttpResponse = await client.GetAsync(healtCheckEndpoint.HealtCheckUrl);
-                    getHttpResponse.EnsureSuccessStatusCode();
-                    metric.Description = getHttpResponse.ReasonPhrase;
-                }
-                catch (Exception ex)
-                {
-                    metric.Description = ex.Message;
-                }
-
-                TimeSpan timeSpan = DateTime.UtcNow - startTime;
-
-                metric.ExecutionSeconds = timeSpan.TotalSeconds;
-                metric.HealtCheckEndpointId = healtCheckEndpoint.Id;
-                metric.HttpStatusCode = getHttpResponse == null ? HttpStatusCode.NoContent : getHttpResponse.StatusCode;
-                metric.ConnectedUserId = healtCheckEndpoint.ConnectedUserId;
-                metric.HealtCheckUrl = healtCheckEndpoint.HealtCheckUrl;
-
-            }
-
+            Metric metric = await _healtCheckCallService.GetMetric(healtCheckEndpoint);
             _rabbitMqService.PushMetric(metric);
         }
 
