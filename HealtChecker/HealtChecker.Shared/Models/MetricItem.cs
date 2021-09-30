@@ -3,7 +3,7 @@ using System.Net;
 
 namespace HealtChecker.Shared.Models
 {
-    public class Metric
+    public class MetricItem
     {
         public double ExecutionSeconds { get; set; }
         public Guid HealtCheckEndpointId { get; set; }

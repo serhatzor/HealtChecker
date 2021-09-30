@@ -75,7 +75,7 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Jobs
 
         private async Task HandleHealtCheck(HealtCheckEndpointModel healtCheckEndpoint)
         {
-            Metric metric = await _healtCheckCallService.GetMetric(healtCheckEndpoint);
+            MetricItem metric = await _healtCheckCallService.GetMetric(healtCheckEndpoint);
             _rabbitMqService.PushMetric(metric);
         }
 

@@ -32,6 +32,7 @@ namespace HealtChecker.Service.HealtCheckEndpoints
                 }
             );
 
+            services.AddSingleton<IHealtCheckCallService, HealtCheckCallService>();
             services.AddSingleton<IRabbitMqService, RabbitMqService>();
             services.AddHostedService<HealtCheckHostedService>();
 

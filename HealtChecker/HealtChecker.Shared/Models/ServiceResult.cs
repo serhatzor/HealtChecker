@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HealtChecker.Service.HealtCheckEndpoints.Base
+namespace HealtChecker.Shared.Models
 {
     public class ServiceResult<T>
     {

@@ -1,11 +1,11 @@
-﻿using HealtChecker.Service.HealtCheckEndpoints.Services.Interfaces;
+﻿using HealtChecker.Service.Metrics.Services.Interfaces;
 using HealtChecker.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
-namespace HealtChecker.Service.HealtCheckEndpoints.Middlewares
+namespace HealtChecker.Service.Metrics.Middlewares
 {
     public class ErrorHandlingMiddleware
     {
@@ -51,6 +51,5 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Middlewares
             return logId;
 
         }
-
     }
 }

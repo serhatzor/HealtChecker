@@ -6,6 +6,6 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Interfaces
 {
     public interface IHealtCheckCallService
     {
-        Task<Metric> GetMetric(HealtCheckEndpointModel healtCheckEndpoint);
+        Task<MetricItem> GetMetric(HealtCheckEndpointModel healtCheckEndpoint);
     }
 }

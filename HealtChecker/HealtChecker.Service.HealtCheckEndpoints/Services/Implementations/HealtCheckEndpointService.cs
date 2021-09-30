@@ -1,9 +1,9 @@
-﻿using HealtChecker.Service.HealtCheckEndpoints.Base;
-using HealtChecker.Service.HealtCheckEndpoints.Data.Entities;
+﻿using HealtChecker.Service.HealtCheckEndpoints.Data.Entities;
 using HealtChecker.Service.HealtCheckEndpoints.Data.Interfaces;
 using HealtChecker.Service.HealtCheckEndpoints.Models;
 using HealtChecker.Service.HealtCheckEndpoints.Services.Interfaces;
 using HealtChecker.Shared.Exceptions;
+using HealtChecker.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

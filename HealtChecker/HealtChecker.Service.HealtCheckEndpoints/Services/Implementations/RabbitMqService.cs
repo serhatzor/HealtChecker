@@ -45,12 +45,38 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
 
         public void PushLog(LogItem log)
         {
-            _logChannel?.BasicPublish(string.Empty, _logQueueName, null, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(log)));
+            if (_logChannel == null)
+            {
+                Trace.TraceError(JsonConvert.SerializeObject(log));
+            }
+            try
+            {
+                _logChannel?.BasicPublish(string.Empty, _logQueueName, null, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(log)));
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(JsonConvert.SerializeObject(log));
+                Trace.TraceError(ex.Message);
+                Trace.TraceError(ex.StackTrace);
+            }
         }
 
-        public void PushMetric(Metric metric)
+        public void PushMetric(MetricItem metric)
         {
-            _metricChannel?.BasicPublish(string.Empty, _metricQueueName, null, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(metric)));
+            if (_metricChannel == null)
+            {
+                Trace.TraceError(JsonConvert.SerializeObject(metric));
+            }
+            try
+            {
+                _metricChannel?.BasicPublish(string.Empty, _metricQueueName, null, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(metric)));
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(JsonConvert.SerializeObject(metric));
+                Trace.TraceError(ex.Message);
+                Trace.TraceError(ex.StackTrace);
+            }
         }
     }
 }

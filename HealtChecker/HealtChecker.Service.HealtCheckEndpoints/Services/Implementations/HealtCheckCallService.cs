@@ -10,9 +10,9 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
 {
     public class HealtCheckCallService : IHealtCheckCallService
     {
-        public async Task<Metric> GetMetric(HealtCheckEndpointModel healtCheckEndpoint)
+        public async Task<MetricItem> GetMetric(HealtCheckEndpointModel healtCheckEndpoint)
         {
-            Metric metric = new Metric();
+            MetricItem metric = new MetricItem();
             using (HttpClient client = new HttpClient())
             {
                 DateTime startTime = DateTime.UtcNow;

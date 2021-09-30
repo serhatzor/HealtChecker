@@ -1,5 +1,8 @@
 using HealtChecker.Service.Metrics.Data.Implementations;
 using HealtChecker.Service.Metrics.Data.Interfaces;
+using HealtChecker.Service.Metrics.Middlewares;
+using HealtChecker.Service.Metrics.Services.Implementations;
+using HealtChecker.Service.Metrics.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,13 +30,16 @@ namespace HealtChecker.Service.Metrics
                     contextOptions.UseInMemoryDatabase("MetricsDbContext");
                 }
             );
-
+            services.AddTransient<IMetricService, MetricService>();
+            services.AddSingleton<IRabbitMqService, RabbitMqService>();
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -1,7 +1,7 @@
 using FluentAssertions;
 using HealtChecker.Service.HealtCheckEndpoints;
-using HealtChecker.Service.HealtCheckEndpoints.Base;
 using HealtChecker.Service.HealtCheckEndpoints.Models;
+using HealtChecker.Shared.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System;
