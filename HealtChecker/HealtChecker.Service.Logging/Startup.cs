@@ -1,5 +1,6 @@
 using HealtChecker.Service.Logging.Data.Implementations;
 using HealtChecker.Service.Logging.Data.Interfaces;
+using HealtChecker.Service.Logging.Jobs;
 using HealtChecker.Service.Logging.Services.Implementations;
 using HealtChecker.Service.Logging.Services.Interfaces;
 using HealtChecker.Service.Metrics.Services.Interfaces;
@@ -9,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace HealtChecker.Service.Logging
 {
@@ -34,11 +34,13 @@ namespace HealtChecker.Service.Logging
                 }
             );
 
+            services.AddHostedService<LoggingHostedService>();
+
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -55,8 +57,6 @@ namespace HealtChecker.Service.Logging
             {
                 endpoints.MapControllers();
             });
-
-            var rabbitMqService = serviceProvider.GetRequiredService<IRabbitMqService>();
         }
     }
 }

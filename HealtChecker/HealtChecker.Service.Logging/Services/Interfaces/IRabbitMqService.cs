@@ -1,8 +1,7 @@
-﻿using HealtChecker.Shared.Models;
-
-namespace HealtChecker.Service.Metrics.Services.Interfaces
+﻿namespace HealtChecker.Service.Metrics.Services.Interfaces
 {
     public interface IRabbitMqService
     {
+        void Init();
     }
 }
