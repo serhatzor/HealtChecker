@@ -26,30 +26,15 @@ namespace HealtChecker.Service.Metrics.Middlewares
             }
             catch (Exception ex)
             {
-                Guid logId = HandleException(ex);
+                LogItem logItem = LogItem.CreateLogItemFromException(ex);
+                _rabbitMqService.PushLog(logItem);
+
                 await httpContext.Response.WriteAsJsonAsync(new ServiceResult<bool>()
                 {
                     Data = false,
-                    Exception = new Exception($"Unexpected error occured with ReferenceId : {logId}")
+                    ErrorMessage = logItem.ErrorMessage
                 });
             }
-        }
-
-        private Guid HandleException(Exception ex)
-        {
-            Guid logId = Guid.NewGuid();
-            LogItem logItem = new LogItem()
-            {
-                Content = JsonConvert.SerializeObject(ex),
-                ErrorTime = DateTime.UtcNow,
-                LogType = ex.GetType().FullName,
-                Id = logId
-            };
-
-            _rabbitMqService.PushLog(logItem);
-
-            return logId;
-
         }
     }
 }

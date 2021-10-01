@@ -26,8 +26,8 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
                 };
                 IConnection connection = connectionFactory.CreateConnection();
 
-                IModel _logChannel = connection.CreateModel();
-                IModel _metricChannel = connection.CreateModel();
+                _logChannel = connection.CreateModel();
+                _metricChannel = connection.CreateModel();
 
                 _logQueueName = configuration["RabbitMq.LoggingQueue"];
                 _metricQueueName = configuration["RabbitMq.MetricsQueue"];

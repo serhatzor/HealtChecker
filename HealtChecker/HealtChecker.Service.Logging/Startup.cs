@@ -1,15 +1,15 @@
+using HealtChecker.Service.Logging.Data.Implementations;
+using HealtChecker.Service.Logging.Data.Interfaces;
+using HealtChecker.Service.Logging.Services.Implementations;
+using HealtChecker.Service.Logging.Services.Interfaces;
+using HealtChecker.Service.Metrics.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HealtChecker.Service.Logging
 {
@@ -25,12 +25,20 @@ namespace HealtChecker.Service.Logging
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IRabbitMqService, RabbitMqService>();
+            services.AddTransient<ILogService, LogService>();
+            services.AddDbContext<ILogDbContext, LogDbContext>(
+                (contextOptions) =>
+                {
+                    contextOptions.UseInMemoryDatabase("LogDbContext");
+                }
+            );
 
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -47,6 +55,8 @@ namespace HealtChecker.Service.Logging
             {
                 endpoints.MapControllers();
             });
+
+            var rabbitMqService = serviceProvider.GetRequiredService<IRabbitMqService>();
         }
     }
 }
