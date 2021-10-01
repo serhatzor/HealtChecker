@@ -83,7 +83,7 @@ namespace HealtChecker.UI
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
-                        LogItem logItem = LogItem.CreateLogItemFromException(contextFeature.Error, Channel.ServiceHealtCheckEndpoints);
+                        LogItem logItem = LogItem.CreateLogItemFromException(contextFeature.Error, Channel.UI);
 
                         IRabbitMqService rabbitMqService = serviceProvider.GetRequiredService<IRabbitMqService>();
                         rabbitMqService.PushLog(logItem);

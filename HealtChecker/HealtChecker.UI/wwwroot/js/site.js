@@ -14,9 +14,10 @@ function CloseHealtCheckModal() {
     $('#healtCheckInterval').val('');
     $('#healtCheckNotificationEmail').val('');
     $('#healtCheckId').val('');
+    $('#healtCheckDownTimeInterval').val('');
 }
 
-function ValidateEndPoint(name, healtCheckUrl, intervalSeconds, notificationEmailAddress) {
+function ValidateEndPoint(name, healtCheckUrl, intervalSeconds, downTimeIntervalSeconds, notificationEmailAddress) {
     if (!name) {
         swal("Oops", "Please provide a name", "error");
         return false;
@@ -29,6 +30,12 @@ function ValidateEndPoint(name, healtCheckUrl, intervalSeconds, notificationEmai
     if ((+intervalSeconds) <= 0) {
         swal("Oops", "Please provide a valid interval which is greate than zero", "error");
         return false;
+    }
+
+    if ((+downTimeIntervalSeconds) <= 0) {
+        swal("Oops", "Please provide a valid down time interval which is greate than zero", "error");
+        return false;
+
     }
 
     if (!notificationEmailAddress.match(emailRegex)) {
@@ -44,9 +51,10 @@ function SaveEndpoint() {
     let name = $('#healtCheckName').val();
     let healtCheckUrl = $('#healtCheckUrl').val();
     let intervalSeconds = $('#healtCheckInterval').val();
+    let downTimeIntervalSeconds = $('#healtCheckDownTimeInterval').val();
     let notificationEmailAddress = $('#healtCheckNotificationEmail').val();
 
-    if (!ValidateEndPoint(name, healtCheckUrl, intervalSeconds, notificationEmailAddress)) {
+    if (!ValidateEndPoint(name, healtCheckUrl, intervalSeconds, downTimeIntervalSeconds, notificationEmailAddress)) {
         return;
     }
     let type = "POST";
@@ -54,7 +62,8 @@ function SaveEndpoint() {
         Name: name.trim(),
         HealtCheckUrl: healtCheckUrl.trim(),
         IntervalSeconds: intervalSeconds.trim(),
-        NotificationEmailAddress: notificationEmailAddress.trim()
+        NotificationEmailAddress: notificationEmailAddress.trim(),
+        DownTimeAlertInterval: downTimeIntervalSeconds.trim()
     };
     if (id) {
         data.Id = id;
@@ -98,6 +107,7 @@ function ShowEndpoint(id) {
                 $('#healtCheckUrl').val(result.data.healtCheckUrl);
                 $('#healtCheckInterval').val(result.data.intervalSeconds);
                 $('#healtCheckNotificationEmail').val(result.data.notificationEmailAddress);
+                $('#healtCheckDownTimeInterval').val(result.data.downTimeAlertInterval);
                 $('#healtCheckModal').modal();
             }
         },
@@ -125,7 +135,7 @@ function DeleteEndpoint(id) {
                     if (result.data && result.isSuccess) {
                         swal("The record has been deleted!", {
                             icon: "success",
-                        }).then(()=>{
+                        }).then(() => {
                             window.location.reload();
                         });
                     }
@@ -141,6 +151,9 @@ function DeleteEndpoint(id) {
     });
 }
 
+
+var existingChart;
+
 function ShowMetrics(id) {
     jQuery.ajax({
         url: "/api/HealtCheckApi/GetMetricsHealtCheckById/" + id,
@@ -150,6 +163,32 @@ function ShowMetrics(id) {
         success: function (result) {
             if (result.isSuccess) {
                 console.log(result.data);
+                $('#chartModal').modal();
+                let data = [];
+                for (let i = 0; i < result.data.length; i++) {
+                    data.push({
+                        x: (i + 1),
+                        y: result.data[i].httpStatusCode,
+                        r: (+result.data[i].executionSeconds) > 2 ? 25 : (+result.data[i].executionSeconds * 10)
+                    })
+                }
+                let popCanvas = document.getElementById("popChart");
+
+                let popData = {
+                    datasets: [{
+                        label: ['Metrics'],
+                        data: data,
+                        backgroundColor: "#FF9966"
+                    }]
+                };
+
+                if (existingChart) {
+                    existingChart.destroy();
+                }
+                existingChart = new Chart(popCanvas, {
+                    type: 'bubble',
+                    data: popData
+                });
             }
         },
         error: function (result) {

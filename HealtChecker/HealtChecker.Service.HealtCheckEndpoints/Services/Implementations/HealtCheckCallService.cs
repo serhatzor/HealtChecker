@@ -36,6 +36,9 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
                     HttpStatusCode.NoContent : getHttpResponse.StatusCode;
                 metric.ConnectedUserId = healtCheckEndpoint.ConnectedUserId;
                 metric.HealtCheckUrl = healtCheckEndpoint.HealtCheckUrl;
+                metric.NotificationEmailAddress = healtCheckEndpoint.NotificationEmailAddress;
+                metric.Name = healtCheckEndpoint.Name;
+                metric.DownTimeAlertInterval = healtCheckEndpoint.DownTimeAlertInterval;
 
             }
 

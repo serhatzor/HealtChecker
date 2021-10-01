@@ -13,5 +13,9 @@ namespace HealtChecker.Shared.Models
         public Guid ConnectedUserId { get; set; }
         public string HealtCheckUrl { get; set; }
         public Guid Id { get; set; }
+        public string NotificationEmailAddress { get; set; }
+        public string Name { get; set; }
+        public int DownTimeAlertInterval { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

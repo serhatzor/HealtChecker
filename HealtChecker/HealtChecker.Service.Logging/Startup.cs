@@ -37,6 +37,7 @@ namespace HealtChecker.Service.Logging
             services.AddHostedService<LoggingHostedService>();
 
             services.AddControllers();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +50,7 @@ namespace HealtChecker.Service.Logging
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -56,6 +58,7 @@ namespace HealtChecker.Service.Logging
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
         }
     }

@@ -10,5 +10,6 @@ namespace HealtChecker.Service.Metrics.Services.Interfaces
         Task<ServiceResult<Guid>> InsertMetric(MetricItem metric);
         Task<ServiceResult<List<MetricItem>>> GetMetricsByConnectedUserId(Guid connectedUserId);
         Task<ServiceResult<List<MetricItem>>> GetMetricsByHealtCheckEndpointId(Guid endpointId);
+        Task<ServiceResult<MetricItem>> GetLastSuccessMetric(Guid endpointId);
     }
 }

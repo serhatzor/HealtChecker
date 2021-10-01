@@ -37,7 +37,9 @@ namespace HealtChecker.Service.Metrics
                 }
             );
             services.AddScoped<IMetricService, MetricService>();
+            services.AddScoped<IDetectDownTimeService, DetectDownTimeService>();
             services.AddSingleton<IRabbitMqService, RabbitMqService>();
+            services.AddSingleton<IEmailNotificationService, EmailNotificationService>();
             services.AddHostedService<MetricsHostedService>();
             services.AddControllers();
         }

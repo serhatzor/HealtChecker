@@ -22,7 +22,8 @@ namespace HealtChecker.Service.Logging.Services.Implementations
                 ErrorTime = logItem.ErrorTime,
                 Id = logItem.Id,
                 LogType = logItem.LogType,
-                ErrorMessage = logItem.ErrorMessage
+                ErrorMessage = logItem.ErrorMessage,
+                Channel = logItem.Channel
             };
 
             await _logDbContext.Logs.AddAsync(insertedModel);

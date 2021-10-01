@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HealtChecker.Shared.Models;
+using System;
 
 namespace HealtChecker.Service.Logging.Data.Entities
 {
@@ -9,5 +10,6 @@ namespace HealtChecker.Service.Logging.Data.Entities
         public string Content { get; set; }
         public Guid Id { get; set; }
         public string ErrorMessage { get; set; }
+        public Channel Channel { get; set; }
     }
 }

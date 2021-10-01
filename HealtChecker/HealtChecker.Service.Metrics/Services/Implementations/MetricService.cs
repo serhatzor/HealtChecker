@@ -45,6 +45,22 @@ namespace HealtChecker.Service.Metrics.Services.Implementations
             return result;
         }
 
+        public async Task<ServiceResult<MetricItem>> GetLastSuccessMetric(Guid endpointId)
+        {
+            Metric metric = await _metricsDbContext.Metrics.Where(
+                x => x.HealtCheckEndpointId == endpointId &&
+                (int)x.HttpStatusCode >= 200 && (int)x.HttpStatusCode <= 299)
+                .OrderByDescending(x => x.CreatedAt).FirstOrDefaultAsync();
+
+            ServiceResult<MetricItem> result = new ServiceResult<MetricItem>();
+            if (metric != null)
+                result.Data = EntityToModel(new List<Metric>() { metric })[0];
+
+            return result;
+        }
+
+
+
         private List<MetricItem> EntityToModel(List<Metric> metrics)
         {
             return metrics.Select(x => new MetricItem()
@@ -56,7 +72,8 @@ namespace HealtChecker.Service.Metrics.Services.Implementations
                 HealtCheckEndpointId = x.HealtCheckEndpointId,
                 HealtCheckUrl = x.HealtCheckUrl,
                 HttpStatusCode = x.HttpStatusCode,
-                Id = x.Id
+                Id = x.Id,
+                CreatedAt = x.CreatedAt
             }).ToList();
         }
 

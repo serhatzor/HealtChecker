@@ -8,6 +8,7 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HealtChecker.Service.Metrics.Services.Implementations
 {
@@ -75,6 +76,10 @@ namespace HealtChecker.Service.Metrics.Services.Implementations
                     IMetricService metricService = scope.ServiceProvider.GetRequiredService<IMetricService>();
 
                     metricService.InsertMetric(metric);
+
+                    IDetectDownTimeService detectDownTimeService = scope.ServiceProvider.GetRequiredService<IDetectDownTimeService>();
+
+                    Task.WaitAll(detectDownTimeService.DetectDownTime(metric));
                 }
 
             }

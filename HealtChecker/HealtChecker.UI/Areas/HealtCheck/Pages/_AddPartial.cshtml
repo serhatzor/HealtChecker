@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <input type="hidden" id="healtCheckId"/>
+            <input type="hidden" id="healtCheckId" />
             <div class="modal-body">
                 <div class="form-group">
                     <label for="healtCheckName">Endpoint Name</label>
@@ -22,8 +22,14 @@
                 <div class="form-group">
                     <label for="healtCheckInterval">Interval</label>
                     <input type="number" required min="1" class="form-control" id="healtCheckInterval" aria-describedby="healtCheckIntervalHelp" placeholder="Enter interval">
-                    <small id="healtCheckIntervalHelp" class="form-text text-muted">Set your interval</small>
+                    <small id="healtCheckIntervalHelp" class="form-text text-muted">Set your check interval</small>
                 </div>
+                <div class="form-group">
+                    <label for="healtCheckDownTimeInterval">Down Time Interval</label>
+                    <input type="number" required min="1" class="form-control" id="healtCheckDownTimeInterval" aria-describedby="healtCheckDownTimeIntervalHelp" placeholder="Enter down time interval">
+                    <small id="healtCheckDownTimeIntervalHelp" class="form-text text-muted">Set your down time interval</small>
+                </div>
+
                 <div class="form-group">
                     <label for="healtCheckNotificationEmail">Email</label>
                     <input type="email" required class="form-control" id="healtCheckNotificationEmail" aria-describedby="healtCheckNotificationEmailHelp" placeholder="Enter Email">

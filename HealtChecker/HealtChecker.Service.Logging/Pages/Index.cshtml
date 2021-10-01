@@ -1,0 +1,65 @@
+﻿@page
+@model HealtChecker.Service.Logging.LogsModel
+
+@{
+    ViewData["Title"] = "Logs";
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/dataTable.css" />
+
+</head>
+<body>
+    <h1>Logs</h1>
+    <table class="table" id="logs">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Log[0].Channel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Log[0].LogType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Log[0].ErrorTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Log[0].Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Log[0].ErrorMessage)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Log)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Channel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LogType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ErrorTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ErrorMessage)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/dataTable.js"></script>
+    <script src="~/js/site.js"></script>
+    <script>
+        jQuery('#logs').DataTable();
+    </script>
+</body>
+</html>

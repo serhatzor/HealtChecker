@@ -10,5 +10,7 @@ namespace HealtChecker.Shared.Models
         public string HealtCheckUrl { get; set; }
         public int IntervalSeconds { get; set; }
         public string NotificationEmailAddress { get; set; }
+        public int DownTimeAlertInterval { get; set; }
+
     }
 }

@@ -33,7 +33,8 @@ namespace HealtChecker.Service.Metrics.IntegrationTests
                 Name = "test endpoint",
                 OperatedUserId = Guid.NewGuid(),
                 IntervalSeconds = 10,
-                NotificationEmailAddress = "serhat21zor@gmail.com"
+                NotificationEmailAddress = "serhat21zor@gmail.com",
+                DownTimeAlertInterval = 30
             };
             return testModel;
         }

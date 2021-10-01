@@ -108,6 +108,8 @@ namespace HealtChecker.Service.Metrics.IntegrationTests
 
             list.Should().HaveCount(2);
 
+            list[0].CreatedAt = testModel1.CreatedAt;
+            list[1].CreatedAt = testModel2.CreatedAt;
             list[0].Should().BeEquivalentTo(testModel1);
             list[1].Should().BeEquivalentTo(testModel2);
         }
@@ -133,6 +135,8 @@ namespace HealtChecker.Service.Metrics.IntegrationTests
 
             list.Should().HaveCount(2);
 
+            list[0].CreatedAt = testModel1.CreatedAt;
+            list[1].CreatedAt = testModel2.CreatedAt;
             list[0].Should().BeEquivalentTo(testModel1);
             list[1].Should().BeEquivalentTo(testModel2);
         }

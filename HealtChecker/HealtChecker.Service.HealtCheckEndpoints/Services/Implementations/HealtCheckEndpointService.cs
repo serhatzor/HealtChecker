@@ -27,7 +27,8 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
                 Name = healtCheckEndpointModel.Name,
                 IntervalSeconds = healtCheckEndpointModel.IntervalSeconds,
                 NextExecutionTime = DateTime.UtcNow.AddSeconds(healtCheckEndpointModel.IntervalSeconds),
-                NotificationEmailAddress = healtCheckEndpointModel.NotificationEmailAddress
+                NotificationEmailAddress = healtCheckEndpointModel.NotificationEmailAddress,
+                DownTimeAlertInterval = healtCheckEndpointModel.DownTimeAlertInterval
             };
             await _healtCheckDbContext.HealtCheckEnpoints.AddAsync(insertedModel);
 
@@ -117,7 +118,8 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
             storedEndpoint.Name = healtCheckEndpointModel.Name;
             storedEndpoint.IntervalSeconds = healtCheckEndpointModel.IntervalSeconds;
             storedEndpoint.NextExecutionTime = storedEndpoint.NextExecutionTime.AddSeconds(differenceInterval);
-            storedEndpoint.NotificationEmailAddress = storedEndpoint.NotificationEmailAddress;
+            storedEndpoint.NotificationEmailAddress = healtCheckEndpointModel.NotificationEmailAddress;
+            storedEndpoint.DownTimeAlertInterval = healtCheckEndpointModel.DownTimeAlertInterval;
 
             int affectedRows = _healtCheckDbContext.SaveChanges(healtCheckEndpointModel.OperatedUserId);
 
@@ -156,7 +158,8 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
                 Name = storedEndpoint.Name,
                 OperatedUserId = storedEndpoint.UpdatedUserId ?? storedEndpoint.CreatedUserId,
                 IntervalSeconds = storedEndpoint.IntervalSeconds,
-                NotificationEmailAddress = storedEndpoint.NotificationEmailAddress
+                NotificationEmailAddress = storedEndpoint.NotificationEmailAddress,
+                DownTimeAlertInterval = storedEndpoint.DownTimeAlertInterval
             };
         }
 
