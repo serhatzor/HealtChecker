@@ -6,8 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,9 +21,9 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Jobs
         private double _jobInterval { get; init; } = 10;
 
         public HealtCheckHostedService(
-            IServiceProvider serviceProvider, 
-            IConfiguration configuration, 
-            IRabbitMqService rabbitMqService, 
+            IServiceProvider serviceProvider,
+            IConfiguration configuration,
+            IRabbitMqService rabbitMqService,
             IHealtCheckCallService healtCheckCallService)
         {
             _serviceProvider = serviceProvider;

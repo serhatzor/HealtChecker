@@ -1,7 +1,6 @@
 ﻿using HealtChecker.Service.HealtCheckEndpoints.Services.Interfaces;
 using HealtChecker.Shared.Models;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
