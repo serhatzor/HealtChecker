@@ -3,21 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31507.150
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.UI", "HealtChecker.UI\HealtChecker.UI.csproj", "{459FFC7C-FC51-49D7-999B-B40F2D567FAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealtChecker.UI", "HealtChecker.UI\HealtChecker.UI.csproj", "{459FFC7C-FC51-49D7-999B-B40F2D567FAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Service.HealtCheckEndpoints", "HealtChecker.Service.HealtCheckEndpoints\HealtChecker.Service.HealtCheckEndpoints.csproj", "{BB3D6015-5499-48CB-812F-7B43F4F08A4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealtChecker.Service.HealtCheckEndpoints", "HealtChecker.Service.HealtCheckEndpoints\HealtChecker.Service.HealtCheckEndpoints.csproj", "{BB3D6015-5499-48CB-812F-7B43F4F08A4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Service.Metrics", "HealtChecker.Service.Metrics\HealtChecker.Service.Metrics.csproj", "{42C74E05-9B91-4FC7-9B37-DA4518B5A432}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealtChecker.Service.Metrics", "HealtChecker.Service.Metrics\HealtChecker.Service.Metrics.csproj", "{42C74E05-9B91-4FC7-9B37-DA4518B5A432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Service.Logging", "HealtChecker.Service.Logging\HealtChecker.Service.Logging.csproj", "{F29C46A6-DCF0-4182-8549-95B9245254BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealtChecker.Service.Logging", "HealtChecker.Service.Logging\HealtChecker.Service.Logging.csproj", "{F29C46A6-DCF0-4182-8549-95B9245254BC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{3402829A-26DF-40FE-BD1E-D37697DF020C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Shared", "HealtChecker.Shared\HealtChecker.Shared.csproj", "{C425EB76-A7C1-451F-AAC7-CA83EF89A53C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealtChecker.Shared", "HealtChecker.Shared\HealtChecker.Shared.csproj", "{C425EB76-A7C1-451F-AAC7-CA83EF89A53C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{2DBF721F-F132-47DC-8E8E-D96353CCD6C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Service.HealtCheckEndpoints.IntegrationTests", "HealtChecker.Service.HealtCheckEndpoints.IntegrationTests\HealtChecker.Service.HealtCheckEndpoints.IntegrationTests.csproj", "{9862B5DA-EE20-4B67-A8EE-74F8468733DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealtChecker.Service.HealtCheckEndpoints.IntegrationTests", "HealtChecker.Service.HealtCheckEndpoints.IntegrationTests\HealtChecker.Service.HealtCheckEndpoints.IntegrationTests.csproj", "{9862B5DA-EE20-4B67-A8EE-74F8468733DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealtChecker.Service.Metrics.IntegrationTests", "HealtChecker.Service.Metrics.IntegrationTests\HealtChecker.Service.Metrics.IntegrationTests.csproj", "{76BB247B-16BC-4A6D-AAB1-81E0D8FA7FD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{9862B5DA-EE20-4B67-A8EE-74F8468733DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9862B5DA-EE20-4B67-A8EE-74F8468733DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9862B5DA-EE20-4B67-A8EE-74F8468733DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76BB247B-16BC-4A6D-AAB1-81E0D8FA7FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76BB247B-16BC-4A6D-AAB1-81E0D8FA7FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76BB247B-16BC-4A6D-AAB1-81E0D8FA7FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76BB247B-16BC-4A6D-AAB1-81E0D8FA7FD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +62,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C425EB76-A7C1-451F-AAC7-CA83EF89A53C} = {3402829A-26DF-40FE-BD1E-D37697DF020C}
 		{9862B5DA-EE20-4B67-A8EE-74F8468733DD} = {2DBF721F-F132-47DC-8E8E-D96353CCD6C2}
+		{76BB247B-16BC-4A6D-AAB1-81E0D8FA7FD1} = {2DBF721F-F132-47DC-8E8E-D96353CCD6C2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8790F86E-26DD-4AAE-B820-B2075DE1A205}

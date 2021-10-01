@@ -12,5 +12,6 @@ namespace HealtChecker.Shared.Models
         public string Content { get; set; }
         public Guid ConnectedUserId { get; set; }
         public string HealtCheckUrl { get; set; }
+        public Guid Id { get; set; }
     }
 }

@@ -91,6 +91,7 @@ namespace HealtChecker.Service.Metrics.Services.Implementations
             if (_logChannel == null)
             {
                 Trace.TraceError(JsonConvert.SerializeObject(log));
+                return;
             }
             try
             {

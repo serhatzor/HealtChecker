@@ -48,6 +48,7 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
             if (_logChannel == null)
             {
                 Trace.TraceError(JsonConvert.SerializeObject(log));
+                return;
             }
             try
             {
@@ -66,6 +67,7 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
             if (_metricChannel == null)
             {
                 Trace.TraceError(JsonConvert.SerializeObject(metric));
+                return;
             }
             try
             {
