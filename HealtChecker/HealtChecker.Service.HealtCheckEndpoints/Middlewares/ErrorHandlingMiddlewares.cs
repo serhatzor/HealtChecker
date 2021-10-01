@@ -25,7 +25,7 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Middlewares
             }
             catch (Exception ex)
             {
-                LogItem logItem = LogItem.CreateLogItemFromException(ex);
+                LogItem logItem = LogItem.CreateLogItemFromException(ex,Channel.ServiceHealtCheckEndpoints);
                 _rabbitMqService.PushLog(logItem);
 
                 await httpContext.Response.WriteAsJsonAsync(new ServiceResult<bool>()

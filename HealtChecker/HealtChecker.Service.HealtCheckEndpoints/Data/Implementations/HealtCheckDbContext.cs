@@ -38,6 +38,12 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Data.Implementations
             modelBuilder.Entity<HealtCheckEnpoint>().Property(x => x.NextExecutionTime)
                 .IsRequired(true);
 
+            modelBuilder.Entity<HealtCheckEnpoint>().Property(x => x.NotificationEmailAddress)
+                .HasMaxLength(512)
+                .IsUnicode(true)
+                .IsRequired(true);
+
+
 
             modelBuilder.Entity<HealtCheckEnpoint>()
                 .HasIndex(x => new { x.ConnectedUserId, x.HealtCheckUrl })

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HealtChecker.Service.HealtCheckEndpoints.Models
+namespace HealtChecker.Shared.Models
 {
     public class BaseModel
     {

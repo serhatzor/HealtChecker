@@ -6,14 +6,20 @@ namespace HealtChecker.Shared.Models
 {
     public class LogItem
     {
+        public LogItem(Channel channel)
+        {
+            Channel = channel;
+        }
+
         public string LogType { get; set; }
         public DateTime ErrorTime { get; set; }
         public string Content { get; set; }
         public Guid Id { get; set; }
 
         public string ErrorMessage { get; set; }
+        public Channel Channel { get; set; }
 
-        public static LogItem CreateLogItemFromException(Exception ex)
+        public static LogItem CreateLogItemFromException(Exception ex,Channel channel)
         {
             Guid logId = Guid.NewGuid();
 
@@ -24,7 +30,7 @@ namespace HealtChecker.Shared.Models
                 errorMessage = $"Entity {(ex as EntityNotFoundException).EntityName} not found with Id : {(ex as EntityNotFoundException).EntityId}";
             }
 
-            LogItem logItem = new LogItem()
+            LogItem logItem = new LogItem(channel)
             {
                 Content = JsonConvert.SerializeObject(ex),
                 ErrorTime = DateTime.UtcNow,
@@ -36,5 +42,13 @@ namespace HealtChecker.Shared.Models
             return logItem;
         }
 
+    }
+
+    public enum Channel
+    {
+        UnKnown,
+        ServiceHealtCheckEndpoints,
+        ServiceMetrics,
+        UI
     }
 }

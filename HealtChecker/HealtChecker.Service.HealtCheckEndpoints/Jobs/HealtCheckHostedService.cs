@@ -1,5 +1,4 @@
-﻿using HealtChecker.Service.HealtCheckEndpoints.Models;
-using HealtChecker.Service.HealtCheckEndpoints.Services.Interfaces;
+﻿using HealtChecker.Service.HealtCheckEndpoints.Services.Interfaces;
 using HealtChecker.Shared.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,7 +57,7 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Jobs
                     .Result.Data;
             }
 
-            if (healtCheckEndpoints == null)
+            if (healtCheckEndpoints == null || healtCheckEndpoints.Count <= 0)
                 return;
 
             Task[] taskList = new Task[healtCheckEndpoints.Count];

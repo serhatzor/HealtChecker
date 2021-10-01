@@ -6,40 +6,43 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace HealtChecker.Service.Metrics.Services.Implementations
 {
     public class RabbitMqService : IRabbitMqService
     {
-        private IModel _logChannel { get; init; }
-        private IModel _metricChannel { get; init; }
-        private IServiceProvider _serviceProvider { get; init; }
-        private string _logQueueName { get; init; }
-        private string _metricQueueName { get; init; }
+        private IModel _logChannel { get; set; }
+        private IModel _metricChannel { get; set; }
+        private IServiceProvider _serviceProvider { get; set; }
+        private IConfiguration _configuration { get; set; }
+        private string _logQueueName { get; set; }
+        private string _metricQueueName { get; set; }
 
         public RabbitMqService(
             IConfiguration configuration,
             IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+            _configuration = configuration;
+        }
+
+        public void Init()
+        {
             try
             {
                 ConnectionFactory connectionFactory = new ConnectionFactory()
                 {
-                    HostName = configuration["RabbitMq.HostName"]
+                    HostName = _configuration["RabbitMq.HostName"]
                 };
                 IConnection connection = connectionFactory.CreateConnection();
 
                 _logChannel = connection.CreateModel();
                 _metricChannel = connection.CreateModel();
 
-                _logQueueName = configuration["RabbitMq.LoggingQueue"];
-                _metricQueueName = configuration["RabbitMq.MetricsQueue"];
+                _logQueueName = _configuration["RabbitMq.LoggingQueue"];
+                _metricQueueName = _configuration["RabbitMq.MetricsQueue"];
 
                 _logChannel.QueueDeclare(_logQueueName, false, false, false, null);
                 _metricChannel.QueueDeclare(_metricQueueName, false, false, false, null);
@@ -55,6 +58,7 @@ namespace HealtChecker.Service.Metrics.Services.Implementations
                 Trace.TraceError(ex.Message);
                 Trace.TraceError(ex.StackTrace);
             }
+
         }
 
         private void Consumer(object sender, BasicDeliverEventArgs args)
@@ -76,12 +80,12 @@ namespace HealtChecker.Service.Metrics.Services.Implementations
             }
             catch (Exception ex)
             {
-                PushLog(new LogItem()
+                PushLog(new LogItem(Channel.ServiceMetrics)
                 {
                     Content = JsonConvert.SerializeObject(ex),
                     ErrorTime = DateTime.UtcNow,
                     Id = Guid.NewGuid(),
-                    LogType = ex.GetType().FullName
+                    LogType = ex.GetType().FullName,
                 });
             }
         }

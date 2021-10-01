@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HealtChecker.Service.HealtCheckEndpoints.Models
+namespace HealtChecker.Shared.Models
 {
     public class HealtCheckEndpointModel : BaseModel
     {
@@ -9,5 +9,6 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Models
         public Guid ConnectedUserId { get; set; }
         public string HealtCheckUrl { get; set; }
         public int IntervalSeconds { get; set; }
+        public string NotificationEmailAddress { get; set; }
     }
 }

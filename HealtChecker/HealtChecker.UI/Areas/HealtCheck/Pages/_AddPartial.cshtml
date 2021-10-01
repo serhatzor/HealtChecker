@@ -1,0 +1,39 @@
+﻿<div class="modal" tabindex="-1" role="dialog" id="healtCheckModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">EndPoint Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseHealtCheckModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="hidden" id="healtCheckId"/>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="healtCheckName">Endpoint Name</label>
+                    <input type="text" required class="form-control" id="healtCheckName" aria-describedby="healtCheckNameHelp" placeholder="Enter name">
+                    <small id="healtCheckNameHelp" class="form-text text-muted">Set your endpoint name</small>
+                </div>
+                <div class="form-group">
+                    <label for="healtCheckUrl">Url</label>
+                    <input type="text" required class="form-control" id="healtCheckUrl" aria-describedby="healtCheckUrlHelp" placeholder="Enter url">
+                    <small id="healtCheckUrlHelp" class="form-text text-muted">Set your url</small>
+                </div>
+                <div class="form-group">
+                    <label for="healtCheckInterval">Interval</label>
+                    <input type="number" required min="1" class="form-control" id="healtCheckInterval" aria-describedby="healtCheckIntervalHelp" placeholder="Enter interval">
+                    <small id="healtCheckIntervalHelp" class="form-text text-muted">Set your interval</small>
+                </div>
+                <div class="form-group">
+                    <label for="healtCheckNotificationEmail">Email</label>
+                    <input type="email" required class="form-control" id="healtCheckNotificationEmail" aria-describedby="healtCheckNotificationEmailHelp" placeholder="Enter Email">
+                    <small id="healtCheckNotificationEmailHelp" class="form-text text-muted">Set your notification mail</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="SaveEndpoint()">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseHealtCheckModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

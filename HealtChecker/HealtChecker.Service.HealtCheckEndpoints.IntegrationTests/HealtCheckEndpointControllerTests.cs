@@ -1,6 +1,5 @@
 using FluentAssertions;
 using HealtChecker.Service.HealtCheckEndpoints;
-using HealtChecker.Service.HealtCheckEndpoints.Models;
 using HealtChecker.Shared.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
@@ -33,7 +32,8 @@ namespace HealtChecker.Service.Metrics.IntegrationTests
                 HealtCheckUrl = "http://www.google.com",
                 Name = "test endpoint",
                 OperatedUserId = Guid.NewGuid(),
-                IntervalSeconds = 10
+                IntervalSeconds = 10,
+                NotificationEmailAddress = "serhat21zor@gmail.com"
             };
             return testModel;
         }

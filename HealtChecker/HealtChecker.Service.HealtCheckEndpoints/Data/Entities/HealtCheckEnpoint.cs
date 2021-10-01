@@ -9,5 +9,6 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Data.Entities
         public string HealtCheckUrl { get; set; }
         public int IntervalSeconds { get; set; }
         public DateTime NextExecutionTime { get; set; }
+        public string NotificationEmailAddress { get; set; }
     }
 }

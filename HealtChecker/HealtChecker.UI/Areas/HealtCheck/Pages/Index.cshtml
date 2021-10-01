@@ -1,0 +1,56 @@
+﻿@page
+@using HealtChecker.Shared.Models
+@using HealtChecker.UI.Areas.HealtCheck.Pages
+@model IndexModel
+@{
+    ViewData["Title"] = "Healt Check Enpoints";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Healt Check Enpoints</h1>
+    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#healtCheckModal" title="Add">Add New EndPoint</button>
+    <table id="healtChecks">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Interval Seconds
+                </th>
+                <th>
+                    Healt Check Url
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (HealtCheckEndpointModel endPoint in Model.EndpointModels)
+            {
+                <tr>
+                    <td>@endPoint.Name</td>
+                    <td>@endPoint.IntervalSeconds</td>
+                    <td>@endPoint.HealtCheckUrl</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="ShowMetrics('@endPoint.Id')">Metrics</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" onclick="ShowEndpoint('@endPoint.Id')">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" onclick="DeleteEndpoint('@endPoint.Id')">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+
+@await Html.PartialAsync("_AddPartial")

@@ -1,5 +1,6 @@
 using HealtChecker.Service.Metrics.Data.Implementations;
 using HealtChecker.Service.Metrics.Data.Interfaces;
+using HealtChecker.Service.Metrics.Jobs;
 using HealtChecker.Service.Metrics.Middlewares;
 using HealtChecker.Service.Metrics.Services.Implementations;
 using HealtChecker.Service.Metrics.Services.Interfaces;
@@ -35,8 +36,9 @@ namespace HealtChecker.Service.Metrics
                     contextOptions.UseInMemoryDatabase("MetricsDbContext");
                 }
             );
-            services.AddTransient<IMetricService, MetricService>();
+            services.AddScoped<IMetricService, MetricService>();
             services.AddSingleton<IRabbitMqService, RabbitMqService>();
+            services.AddHostedService<MetricsHostedService>();
             services.AddControllers();
         }
 
@@ -54,7 +56,7 @@ namespace HealtChecker.Service.Metrics
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
-                        LogItem logItem = LogItem.CreateLogItemFromException(contextFeature.Error);
+                        LogItem logItem = LogItem.CreateLogItemFromException(contextFeature.Error, Channel.ServiceMetrics);
 
                         IRabbitMqService rabbitMqService = serviceProvider.GetRequiredService<IRabbitMqService>();
                         rabbitMqService.PushLog(logItem);

@@ -1,5 +1,4 @@
-﻿using HealtChecker.Service.HealtCheckEndpoints.Models;
-using HealtChecker.Service.HealtCheckEndpoints.Services.Interfaces;
+﻿using HealtChecker.Service.HealtCheckEndpoints.Services.Interfaces;
 using HealtChecker.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;

@@ -26,7 +26,7 @@ namespace HealtChecker.Service.Logging
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IRabbitMqService, RabbitMqService>();
-            services.AddTransient<ILogService, LogService>();
+            services.AddScoped<ILogService, LogService>();
             services.AddDbContext<ILogDbContext, LogDbContext>(
                 (contextOptions) =>
                 {

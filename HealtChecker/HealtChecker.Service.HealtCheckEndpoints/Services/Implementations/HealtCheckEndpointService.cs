@@ -1,6 +1,5 @@
 ﻿using HealtChecker.Service.HealtCheckEndpoints.Data.Entities;
 using HealtChecker.Service.HealtCheckEndpoints.Data.Interfaces;
-using HealtChecker.Service.HealtCheckEndpoints.Models;
 using HealtChecker.Service.HealtCheckEndpoints.Services.Interfaces;
 using HealtChecker.Shared.Exceptions;
 using HealtChecker.Shared.Models;
@@ -27,7 +26,8 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
                 HealtCheckUrl = healtCheckEndpointModel.HealtCheckUrl,
                 Name = healtCheckEndpointModel.Name,
                 IntervalSeconds = healtCheckEndpointModel.IntervalSeconds,
-                NextExecutionTime = DateTime.UtcNow.AddSeconds(healtCheckEndpointModel.IntervalSeconds)
+                NextExecutionTime = DateTime.UtcNow.AddSeconds(healtCheckEndpointModel.IntervalSeconds),
+                NotificationEmailAddress = healtCheckEndpointModel.NotificationEmailAddress
             };
             await _healtCheckDbContext.HealtCheckEnpoints.AddAsync(insertedModel);
 
@@ -117,6 +117,7 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
             storedEndpoint.Name = healtCheckEndpointModel.Name;
             storedEndpoint.IntervalSeconds = healtCheckEndpointModel.IntervalSeconds;
             storedEndpoint.NextExecutionTime = storedEndpoint.NextExecutionTime.AddSeconds(differenceInterval);
+            storedEndpoint.NotificationEmailAddress = storedEndpoint.NotificationEmailAddress;
 
             int affectedRows = _healtCheckDbContext.SaveChanges(healtCheckEndpointModel.OperatedUserId);
 
@@ -154,7 +155,8 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
                 Id = storedEndpoint.Id,
                 Name = storedEndpoint.Name,
                 OperatedUserId = storedEndpoint.UpdatedUserId ?? storedEndpoint.CreatedUserId,
-                IntervalSeconds = storedEndpoint.IntervalSeconds
+                IntervalSeconds = storedEndpoint.IntervalSeconds,
+                NotificationEmailAddress = storedEndpoint.NotificationEmailAddress
             };
         }
 

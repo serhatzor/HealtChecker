@@ -1,5 +1,4 @@
-﻿using HealtChecker.Service.HealtCheckEndpoints.Models;
-using HealtChecker.Shared.Models;
+﻿using HealtChecker.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
