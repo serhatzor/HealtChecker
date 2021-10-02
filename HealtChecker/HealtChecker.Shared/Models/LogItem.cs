@@ -28,6 +28,9 @@ namespace HealtChecker.Shared.Models
             if(ex is EntityNotFoundException)
             {
                 errorMessage = $"Entity {(ex as EntityNotFoundException).EntityName} not found with Id : {(ex as EntityNotFoundException).EntityId}";
+            } else if(ex is SecurityException)
+            {
+                errorMessage = $"Entity {(ex as EntityNotFoundException).EntityName} has a security issue with Id : {(ex as EntityNotFoundException).EntityId}";
             }
 
             LogItem logItem = new LogItem(channel)

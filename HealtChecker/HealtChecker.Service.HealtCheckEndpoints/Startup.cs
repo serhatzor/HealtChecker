@@ -41,7 +41,7 @@ namespace HealtChecker.Service.HealtCheckEndpoints
             services.AddSingleton<IRabbitMqService, RabbitMqService>();
             services.AddHostedService<HealtCheckHostedService>();
 
-            services.AddTransient<IHealtCheckEndpointService, HealtCheckEndpointService>();
+            services.AddScoped<IHealtCheckEndpointService, HealtCheckEndpointService>();
             services.AddControllers();
         }
 

@@ -17,16 +17,10 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Controllers
             _metricService = metricService;
         }
 
-        [HttpGet("GetByConnectedUserId/{connectedUserId}")]
-        public async Task<ServiceResult<List<MetricItem>>> GetByConnectedUserId(Guid connectedUserId)
+        [HttpGet("GetByHealtCheckEndpointId/{endpointId}/{userId}")]
+        public async Task<ServiceResult<List<MetricItem>>> GetByHealtCheckEndpointId(Guid endpointId,Guid userId)
         {
-            return await _metricService.GetMetricsByConnectedUserId(connectedUserId);
-        }
-
-        [HttpGet("GetByHealtCheckEndpointId/{endpointId}")]
-        public async Task<ServiceResult<List<MetricItem>>> GetByHealtCheckEndpointId(Guid endpointId)
-        {
-            return await _metricService.GetMetricsByHealtCheckEndpointId(endpointId);
+            return await _metricService.GetMetricsByHealtCheckEndpointId(endpointId, userId);
         }
 
         [HttpPost]

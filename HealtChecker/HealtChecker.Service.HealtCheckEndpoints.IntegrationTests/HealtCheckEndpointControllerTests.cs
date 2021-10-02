@@ -71,9 +71,9 @@ namespace HealtChecker.Service.Metrics.IntegrationTests
             return updateResult;
         }
 
-        private async Task<ServiceResult<bool>> DoDeleteOperation(Guid id)
+        private async Task<ServiceResult<bool>> DoDeleteOperation(Guid id, Guid userId)
         {
-            HttpResponseMessage deleteHttpResponse = await _httpClient.DeleteAsync($"/api/HealtCheckEndpoint/{id}");
+            HttpResponseMessage deleteHttpResponse = await _httpClient.DeleteAsync($"/api/HealtCheckEndpoint/{id}/{userId}");
 
             deleteHttpResponse.EnsureSuccessStatusCode();
 
@@ -92,7 +92,7 @@ namespace HealtChecker.Service.Metrics.IntegrationTests
         private async Task<HealtCheckEndpointModel> DoGetOperation(HealtCheckEndpointModel testModel)
         {
             HttpResponseMessage getHttpResponse = await _httpClient.GetAsync(
-                $"/api/HealtCheckEndpoint/GetById/{testModel.Id}");
+                $"/api/HealtCheckEndpoint/GetById/{testModel.Id}/{testModel.ConnectedUserId}");
 
             getHttpResponse.EnsureSuccessStatusCode();
 
@@ -140,7 +140,6 @@ namespace HealtChecker.Service.Metrics.IntegrationTests
         public async Task UpdateAppTest()
         {
             HealtCheckEndpointModel testModel = GetNewModel();
-            Guid firstConnectedUserId = testModel.ConnectedUserId;
 
             ServiceResult<Guid> addResult = await DoAddOperation(testModel);
             testModel.Id = addResult.Data;
@@ -148,21 +147,12 @@ namespace HealtChecker.Service.Metrics.IntegrationTests
 
             testModel.Name = "test 2";
             testModel.HealtCheckUrl = "www.google.com";
+            testModel.OperatedUserId = testModel.ConnectedUserId;
 
             await DoUpdateOperation(testModel);
 
             HealtCheckEndpointModel actualValue = await DoGetOperation(testModel);
             testModel.Should().BeEquivalentTo(actualValue);
-
-            testModel.ConnectedUserId = Guid.NewGuid();
-            testModel.OperatedUserId = Guid.NewGuid();
-            testModel.Name = "test 3";
-            await DoUpdateOperation(testModel);
-
-            actualValue = await DoGetOperation(testModel);
-
-            actualValue.OperatedUserId.Should().Be(testModel.OperatedUserId);
-            actualValue.ConnectedUserId.Should().Be(firstConnectedUserId);
         }
 
         [Fact]
@@ -202,20 +192,23 @@ namespace HealtChecker.Service.Metrics.IntegrationTests
 
             HealtCheckEndpointModel testModel1 = GetNewModel();
             testModel1.ConnectedUserId = connectedUserId;
+            testModel1.OperatedUserId = connectedUserId;
             ServiceResult<Guid> addResult1 = await DoAddOperation(testModel1);
             testModel1.Id = addResult1.Data;
 
             HealtCheckEndpointModel testModel2 = GetNewModel();
             testModel2.ConnectedUserId = connectedUserId;
+            testModel2.OperatedUserId = connectedUserId;
             ServiceResult<Guid> addResult2 = await DoAddOperation(testModel2);
             testModel2.Id = addResult2.Data;
 
             HealtCheckEndpointModel testModel3 = GetNewModel();
             testModel3.ConnectedUserId = connectedUserId;
+            testModel3.OperatedUserId = connectedUserId;
             ServiceResult<Guid> addResult3 = await DoAddOperation(testModel3);
             testModel3.Id = addResult3.Data;
 
-            await DoDeleteOperation(testModel1.Id);
+            await DoDeleteOperation(testModel1.Id, connectedUserId);
 
             List<HealtCheckEndpointModel> list = await DoGetByUserIdOperation(connectedUserId);
 

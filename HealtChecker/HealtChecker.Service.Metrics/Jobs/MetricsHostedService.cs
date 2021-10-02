@@ -23,6 +23,5 @@ namespace HealtChecker.Service.Metrics.Jobs
         {
             return Task.CompletedTask;
         }
-
     }
 }

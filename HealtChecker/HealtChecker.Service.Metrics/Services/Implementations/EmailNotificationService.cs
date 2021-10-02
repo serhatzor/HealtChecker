@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
 
 namespace HealtChecker.Service.Metrics.Services.Implementations
 {

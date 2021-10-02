@@ -18,23 +18,10 @@ namespace HealtChecker.Service.Metrics.Services.Implementations
             _metricsDbContext = metricsDbContext;
         }
 
-        public async Task<ServiceResult<List<MetricItem>>> GetMetricsByConnectedUserId(Guid connectedUserId)
+        public async Task<ServiceResult<List<MetricItem>>> GetMetricsByHealtCheckEndpointId(Guid endpointId, Guid userId)
         {
             List<Metric> metrics = await _metricsDbContext.Metrics.Where(
-                x => x.ConnectedUserId == connectedUserId).ToListAsync();
-
-            ServiceResult<List<MetricItem>> result =
-                new ServiceResult<List<MetricItem>>();
-
-            result.Data = EntityToModel(metrics);
-
-            return result;
-        }
-
-        public async Task<ServiceResult<List<MetricItem>>> GetMetricsByHealtCheckEndpointId(Guid endpointId)
-        {
-            List<Metric> metrics = await _metricsDbContext.Metrics.Where(
-                x => x.HealtCheckEndpointId == endpointId).ToListAsync();
+                x => x.HealtCheckEndpointId == endpointId && x.ConnectedUserId == userId).ToListAsync();
 
             ServiceResult<List<MetricItem>> result =
                 new ServiceResult<List<MetricItem>>();

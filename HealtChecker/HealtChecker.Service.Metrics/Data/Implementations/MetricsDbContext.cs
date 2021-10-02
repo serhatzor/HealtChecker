@@ -55,7 +55,5 @@ namespace HealtChecker.Service.Metrics.Data.Implementations
                 }
             }
         }
-
-
     }
 }

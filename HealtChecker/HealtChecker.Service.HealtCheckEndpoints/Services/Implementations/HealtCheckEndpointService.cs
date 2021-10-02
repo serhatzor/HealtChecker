@@ -40,23 +40,35 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
             return result;
         }
 
-        public async Task<ServiceResult<bool>> DeleteHealtCheckEndpoint(HealtCheckEndpointModel HealtCheckEndpointModel)
+        public async Task<ServiceResult<bool>> DeleteHealtCheckEndpoint(HealtCheckEndpointModel healtCheckEndpointModel)
         {
-            HealtCheckEnpoint storedEndpoint = await _healtCheckDbContext.HealtCheckEnpoints.FindAsync(HealtCheckEndpointModel.Id);
+            HealtCheckEnpoint storedEndpoint = await _healtCheckDbContext.HealtCheckEnpoints.FindAsync(healtCheckEndpointModel.Id);
             if (storedEndpoint == null)
             {
                 throw new EntityNotFoundException()
                 {
-                    EntityId = HealtCheckEndpointModel.Id,
+                    EntityId = healtCheckEndpointModel.Id,
                     EntityName = nameof(HealtCheckEnpoint),
                     ServiceName = nameof(HealtCheckEndpointService),
                     MethodName = nameof(DeleteHealtCheckEndpoint)
                 };
             }
 
+            if (storedEndpoint.ConnectedUserId != healtCheckEndpointModel.OperatedUserId)
+            {
+                throw new SecurityException()
+                {
+                    MethodName = nameof(DeleteHealtCheckEndpoint),
+                    ServiceName = nameof(HealtCheckEndpointService),
+                    EntityId = healtCheckEndpointModel.Id,
+                    EntityName = nameof(HealtCheckEnpoint),
+                    InvalidOperatorUserId = healtCheckEndpointModel.OperatedUserId
+                };
+            }
+
             _healtCheckDbContext.HealtCheckEnpoints.Remove(storedEndpoint);
 
-            int affectedRows = _healtCheckDbContext.SaveChanges(HealtCheckEndpointModel.OperatedUserId);
+            int affectedRows = _healtCheckDbContext.SaveChanges(healtCheckEndpointModel.OperatedUserId);
 
             ServiceResult<bool> result = new ServiceResult<bool>();
             result.Data = affectedRows > 0;
@@ -64,18 +76,30 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
             return result;
         }
 
-        public async Task<ServiceResult<HealtCheckEndpointModel>> GetHealtCheckEnpointById(HealtCheckEndpointModel HealtCheckEndpointModel)
+        public async Task<ServiceResult<HealtCheckEndpointModel>> GetHealtCheckEnpointById(HealtCheckEndpointModel healtCheckEndpointModel)
         {
             HealtCheckEnpoint storedEndpoint = await _healtCheckDbContext.HealtCheckEnpoints
-                .FindAsync(HealtCheckEndpointModel.Id);
+                .FindAsync(healtCheckEndpointModel.Id);
             if (storedEndpoint == null)
             {
                 throw new EntityNotFoundException()
                 {
-                    EntityId = HealtCheckEndpointModel.Id,
+                    EntityId = healtCheckEndpointModel.Id,
                     EntityName = nameof(HealtCheckEnpoint),
                     ServiceName = nameof(HealtCheckEndpointService),
                     MethodName = nameof(GetHealtCheckEnpointById)
+                };
+            }
+
+            if (storedEndpoint.ConnectedUserId != healtCheckEndpointModel.OperatedUserId)
+            {
+                throw new SecurityException()
+                {
+                    MethodName = nameof(GetHealtCheckEnpointById),
+                    ServiceName = nameof(HealtCheckEndpointService),
+                    EntityId = healtCheckEndpointModel.Id,
+                    EntityName = nameof(HealtCheckEnpoint),
+                    InvalidOperatorUserId = healtCheckEndpointModel.OperatedUserId
                 };
             }
 
@@ -109,6 +133,18 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Implementations
                     EntityName = nameof(HealtCheckEnpoint),
                     ServiceName = nameof(HealtCheckEndpointService),
                     MethodName = nameof(UpdateHealtCheckEndpoint)
+                };
+            }
+
+            if (storedEndpoint.ConnectedUserId != healtCheckEndpointModel.OperatedUserId)
+            {
+                throw new SecurityException()
+                {
+                    MethodName = nameof(UpdateHealtCheckEndpoint),
+                    ServiceName = nameof(HealtCheckEndpointService),
+                    EntityId = healtCheckEndpointModel.Id,
+                    EntityName = nameof(HealtCheckEnpoint),
+                    InvalidOperatorUserId = healtCheckEndpointModel.OperatedUserId
                 };
             }
 

@@ -16,8 +16,12 @@
                     Name
                 </th>
                 <th>
-                    Interval Seconds
+                    Interval
                 </th>
+                <th>
+                    Down Time Interval
+                </th>
+
                 <th>
                     Healt Check Url
                 </th>
@@ -35,6 +39,7 @@
                 <tr>
                     <td>@endPoint.Name</td>
                     <td>@endPoint.IntervalSeconds</td>
+                    <td>@endPoint.DownTimeAlertInterval</td>
                     <td>@endPoint.HealtCheckUrl</td>
                     <td>
                         <button class="btn btn-primary" onclick="ShowMetrics('@endPoint.Id')">Metrics</button>

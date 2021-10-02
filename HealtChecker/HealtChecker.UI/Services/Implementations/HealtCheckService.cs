@@ -22,11 +22,14 @@ namespace HealtChecker.UI.Services.Implementations
             _httpContextAccessor = httpContextAccessor;
         }
 
+        private string GetUserId()
+        {
+            return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        }
+
         public async Task<ServiceResult<List<HealtCheckEndpointModel>>> GetHealtCheckEndpoints()
         {
-            string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            HttpResponseMessage getHttpResponse = await _httpClient.GetAsync($"/api/HealtCheckEndpoint/GetByUserId/{userId}");
+            HttpResponseMessage getHttpResponse = await _httpClient.GetAsync($"/api/HealtCheckEndpoint/GetByUserId/{GetUserId()}");
 
             getHttpResponse.EnsureSuccessStatusCode();
 
@@ -40,8 +43,7 @@ namespace HealtChecker.UI.Services.Implementations
 
         public async Task<ServiceResult<Guid>> InsertHealtCheckEndPoint(HealtCheckEndpointModel healtCheckEndpointModel)
         {
-            string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            healtCheckEndpointModel.OperatedUserId = Guid.Parse(userId);
+            healtCheckEndpointModel.OperatedUserId = Guid.Parse(GetUserId());
             healtCheckEndpointModel.ConnectedUserId = healtCheckEndpointModel.OperatedUserId;
 
             HttpResponseMessage addHttpResponse = await _httpClient.PostAsJsonAsync("/api/HealtCheckEndpoint", healtCheckEndpointModel);
@@ -58,8 +60,8 @@ namespace HealtChecker.UI.Services.Implementations
 
         public async Task<ServiceResult<bool>> UpdateHealtCheckEndPoint(HealtCheckEndpointModel healtCheckEndpointModel)
         {
-            string userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            healtCheckEndpointModel.OperatedUserId = Guid.Parse(userId);
+            healtCheckEndpointModel.OperatedUserId = Guid.Parse(GetUserId());
+            healtCheckEndpointModel.ConnectedUserId = healtCheckEndpointModel.OperatedUserId;
 
             HttpResponseMessage httpResponse = await _httpClient.PutAsJsonAsync("/api/HealtCheckEndpoint", healtCheckEndpointModel);
 
@@ -76,7 +78,7 @@ namespace HealtChecker.UI.Services.Implementations
         public async Task<ServiceResult<HealtCheckEndpointModel>> GetHealtCheckById(Guid id)
         {
             HttpResponseMessage getHttpResponse = await _httpClient.GetAsync(
-                $"/api/HealtCheckEndpoint/GetById/{id}");
+                $"/api/HealtCheckEndpoint/GetById/{id}/{GetUserId()}");
 
             getHttpResponse.EnsureSuccessStatusCode();
 
@@ -91,7 +93,7 @@ namespace HealtChecker.UI.Services.Implementations
 
         public async Task<ServiceResult<bool>> Delete(Guid id)
         {
-            HttpResponseMessage deleteHttpResponse = await _httpClient.DeleteAsync($"/api/HealtCheckEndpoint/{id}");
+            HttpResponseMessage deleteHttpResponse = await _httpClient.DeleteAsync($"/api/HealtCheckEndpoint/{id}/{GetUserId()}");
 
             deleteHttpResponse.EnsureSuccessStatusCode();
 

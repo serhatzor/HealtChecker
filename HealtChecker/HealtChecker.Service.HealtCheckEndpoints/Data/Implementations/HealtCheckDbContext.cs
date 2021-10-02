@@ -42,8 +42,8 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Data.Implementations
                 .HasMaxLength(512)
                 .IsUnicode(true)
                 .IsRequired(true);
-
-
+            modelBuilder.Entity<HealtCheckEnpoint>().Property(x => x.DownTimeAlertInterval)
+                .IsRequired(true);
 
             modelBuilder.Entity<HealtCheckEnpoint>()
                 .HasIndex(x => new { x.ConnectedUserId, x.HealtCheckUrl })
@@ -107,7 +107,5 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Data.Implementations
                 }
             }
         }
-
-
     }
 }

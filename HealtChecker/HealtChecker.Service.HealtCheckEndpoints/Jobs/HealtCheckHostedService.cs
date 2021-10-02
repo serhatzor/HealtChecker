@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,6 +45,7 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Jobs
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void DoWork(object state)
         {
             List<HealtCheckEndpointModel> healtCheckEndpoints = null;
@@ -68,7 +70,6 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Services.Jobs
 
             Task.WaitAll(taskList, int.MaxValue);
         }
-
 
         private async Task HandleHealtCheck(HealtCheckEndpointModel healtCheckEndpoint)
         {

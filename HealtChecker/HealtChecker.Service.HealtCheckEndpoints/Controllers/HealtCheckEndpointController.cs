@@ -17,12 +17,13 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Controllers
             _healtCheckEndpointService = healtCheckEndpointService;
         }
 
-        [HttpGet("GetById/{healtCheckEndPointId}")]
-        public async Task<ServiceResult<HealtCheckEndpointModel>> GetById(Guid healtCheckEndPointId)
+        [HttpGet("GetById/{healtCheckEndPointId}/{userId}")]
+        public async Task<ServiceResult<HealtCheckEndpointModel>> GetById(Guid healtCheckEndPointId, Guid userId)
         {
             return await _healtCheckEndpointService.GetHealtCheckEnpointById(new HealtCheckEndpointModel()
             {
-                Id = healtCheckEndPointId
+                Id = healtCheckEndPointId,
+                OperatedUserId = userId
             });
         }
 
@@ -47,12 +48,13 @@ namespace HealtChecker.Service.HealtCheckEndpoints.Controllers
             return await _healtCheckEndpointService.UpdateHealtCheckEndpoint(healtCheckEndpointModel);
         }
 
-        [HttpDelete("{healtCheckEndPointId}")]
-        public async Task<ServiceResult<bool>> Delete(Guid healtCheckEndPointId)
+        [HttpDelete("{healtCheckEndPointId}/{userId}")]
+        public async Task<ServiceResult<bool>> Delete(Guid healtCheckEndPointId,Guid userId)
         {
             return await _healtCheckEndpointService.DeleteHealtCheckEndpoint(new HealtCheckEndpointModel()
             {
-                Id = healtCheckEndPointId
+                Id = healtCheckEndPointId,
+                OperatedUserId = userId
             });
         }
     }
